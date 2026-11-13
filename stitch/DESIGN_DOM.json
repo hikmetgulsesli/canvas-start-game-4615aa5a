@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-11-13T17:11:58.515Z",
+  "screenCount": 1,
+  "screens": {
+    "d56720aba798483a9184844af3e91181": {
+      "screenId": "d56720aba798483a9184844af3e91181",
+      "materialSymbolsRequired": false,
+      "sections": [
+        {
+          "tag": "main",
+          "layout": "flex-col",
+          "classes": [
+            "flex-1",
+            "flex",
+            "flex-col",
+            "w-full",
+            "max-w-7xl",
+            "mx-auto",
+            "px-6",
+            "py-8"
+          ],
+          "childCount": 28
+        }
+      ],
+      "buttons": [
+        {
+          "kind": "button",
+          "label": "Start Game",
+          "classes": [
+            "px-8",
+            "py-3.5",
+            "bg-emerald-500",
+            "hover:bg-emerald-600",
+            "active:bg-emerald-700",
+            "text-white",
+            "font-semibold",
+            "text-sm",
+            "rounded-xl",
+            "shadow-lg",
+            "shadow-emerald-950/60",
+            "transition-all",
+            "duration-150",
+            "transform",
+            "hover:-translate-y-0.5",
+            "focus:outline-none",
+            "focus:ring-2",
+            "focus:ring-emerald-400",
+            "focus:ring-offset-2",
+            "focus:ring-offset-gray-900"
+          ],
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        }
+      ],
+      "inputs": [],
+      "navLinks": [],
+      "cards": [],
+      "icons": [],
+      "images": [],
+      "cssVars": {},
+      "colorPalette": {},
+      "fonts": [],
+      "layoutHints": {
+        "gridCols": 1,
+        "flexDirection": "col",
+        "gap": "8"
+      },
+      "behaviorContract": [
+        {
+          "kind": "button",
+          "label": "Start Game",
+          "icon": null,
+          "action": "click-action",
+          "expectedBehavior": "produce visible DOM/state/URL feedback; never empty onClick"
+        }
+      ],
+      "tabBar": [],
+      "title": "Play Page - Canvas Start Game"
+    }
+  }
+}
