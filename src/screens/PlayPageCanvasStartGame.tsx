@@ -7,6 +7,7 @@
 // 3. Wire interactive controls through the typed actions prop
 // 4. Replace placeholder data with props/state
 
+import { useApplicationState } from "../features/prod-canvas-start-game/prod-canvas-start-game.store";
 
 export type PlayPageCanvasStartGameActionId = "start-game-1";
 
@@ -20,6 +21,11 @@ export interface PlayPageCanvasStartGameProps {
 export type PlayPageCanvasStartGameActionCallbacks = NonNullable<PlayPageCanvasStartGameProps["actions"]>;
 
 export function PlayPageCanvasStartGame({ actions }: PlayPageCanvasStartGameProps) {
+  const { state } = useApplicationState();
+  const isPlaying = state.status === "playing";
+  const highScore = state.high_score;
+  const highScoreValue = highScore === null ? undefined : String(highScore);
+
   return (
     <>
       {/* SURF_PLAY_PAGE (Root Surface) */}
@@ -103,7 +109,7 @@ export function PlayPageCanvasStartGame({ actions }: PlayPageCanvasStartGameProp
             <aside className="lg:col-span-4 flex flex-col space-y-6">
               
               {/* SURF_GAME_STATUS (Contained Surface) */}
-              <div data-surface-id="SURF_GAME_STATUS" className="bg-gray-900/80 border border-gray-800 rounded-2xl p-6 shadow-xl space-y-6" data-setfarm-element-ref="E000004" data-observable-refs="OBS_START_GAME_GAME_STARTED_MESSAGE OBS_START_GAME_HIGH_SCORE_PERSISTENCE">
+              <div data-surface-id="SURF_GAME_STATUS" className="bg-gray-900/80 border border-gray-800 rounded-2xl p-6 shadow-xl space-y-6" data-setfarm-element-ref="E000004" data-observable-refs="OBS_START_GAME_GAME_STARTED_MESSAGE OBS_START_GAME_HIGH_SCORE_PERSISTENCE" data-status={state.status} data-value={highScoreValue}>
                 <div className="flex items-center justify-between border-b border-gray-800/80 pb-4">
                   <h2 className="text-sm font-bold uppercase tracking-wider text-gray-300">Game Status</h2>
                   <span className="px-2.5 py-0.5 rounded text-[11px] font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/50">Active Monitor</span>
@@ -113,10 +119,19 @@ export function PlayPageCanvasStartGame({ actions }: PlayPageCanvasStartGameProp
                 <div className="space-y-2">
                   <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Session Status</span>
                   <div className="p-3.5 bg-gray-950 rounded-xl border border-gray-800/90 text-sm">
-                    {/* Initial message placeholder before action */}
-                    <span className="text-gray-400 italic">Awaiting start signal</span>
-                    {/* Game started message semantic receipt for OBS_START_GAME_GAME_STARTED_MESSAGE */}
-                    <span className="hidden" aria-live="polite">Game started</span>
+                    {/* Session status message bound to OBS_START_GAME_GAME_STARTED_MESSAGE */}
+                    {isPlaying ? (
+                      <span
+                        className="text-emerald-400 font-medium"
+                        role="status"
+                        aria-live="polite"
+                        data-observable="game-started-message"
+                      >
+                        Game started
+                      </span>
+                    ) : (
+                      <span className="text-gray-400 italic">Awaiting start signal</span>
+                    )}
                   </div>
                 </div>
       
@@ -127,7 +142,13 @@ export function PlayPageCanvasStartGame({ actions }: PlayPageCanvasStartGameProp
                     <span className="text-xs font-mono text-gray-400 uppercase">All-Time Best</span>
                     {/* Initially null or represented with 0 for after/reload observable contract value="0" */}
                     <div className="flex items-baseline space-x-1">
-                      <span className="text-2xl font-black font-mono text-emerald-400 tracking-tight" data-observable="high-score" data-value="0">0</span>
+                      <span
+                        className="text-2xl font-black font-mono text-emerald-400 tracking-tight"
+                        data-observable="high-score"
+                        data-value={highScoreValue}
+                      >
+                        {highScore === null ? "—" : highScore}
+                      </span>
                       <span className="text-xs text-gray-500 font-mono">pts</span>
                     </div>
                   </div>
